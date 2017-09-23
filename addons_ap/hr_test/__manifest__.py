@@ -31,6 +31,7 @@ actions(Check in/Check out) performed by them.
     #     'static/src/img/default_image.png',
     # ],
     # 依赖模块（模块的目录名）
+
     'depends': ['hr'],
     # 必须安装的模块
     'data': [
