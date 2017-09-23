@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
   <data>
     <!-- top menu item -->
     <menuitem name ="Animation"      id="menu_ani_root" groups="base.group_user" sequence="10"/>
@@ -28,15 +28,16 @@
         </tree>
       </field>
     </record>
+
     <record model="ir.ui.view" id="view_form_env">
       <field name="name">view.form_env</field>
       <field name="model">ani.env</field>
       <field name="type">form</field>
       <field name="priority" eval="16"/>
       <field name="arch" type="xml">
-        <form string="env form" version="7.0">
+        <form string="env form">
           <header>
-            <field name="status" widget="statusbar" clickable="True" statusbar_colors="{&quot;pending&quot;:&quot;red&quot;}"/>
+            <field name="status" widget="statusbar" clickable="True" statusbar_colors="{pending:red}"/>
           </header>
           <sheet string="env">
             <div class="oe_title">
@@ -99,11 +100,13 @@
         </form>
       </field>
     </record>
+
     <record model="ir.actions.act_window" id="action_list_env">
       <field name="name">env</field>
       <field name="res_model">ani.env</field>
       <field name="view_mode">tree,form</field>
     </record>
+
     <menuitem name ="env"  id="menu_ani_mrp_env"  parent="menu_ani_mrp"  sequence="10" action="action_list_env"/>
 
     <!--view-->
@@ -121,4 +124,4 @@
           </field>
       </record>
   </data>
-</openerp>
+</odoo>

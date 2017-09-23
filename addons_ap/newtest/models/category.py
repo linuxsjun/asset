@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
-from openerp.osv import osv, fields
+from odoo import models, fields, api, exceptions, _, SUPERUSER_ID
 
-class ani_category(osv.osv):
+class ani_category(models.Model):
+    '''
     def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
@@ -19,16 +20,18 @@ class ani_category(osv.osv):
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
         res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
+    '''
 
     _name = 'ani.category'
     _description = 'category of Animation'
-    _columns = {
-        'category_id': fields.one2many('ani.env', 'type_id', 'Type ID'),
-        'name': fields.char('Name', required=True),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
-        'parent_id': fields.many2one('ani.category', 'Parent Category',select=True, ondelete='cascade'),
-        'child_id': fields.one2many('ani.category', 'parent_id', string='Child Categories'),
-        'shortening': fields.char('Short', size=3),
-        'show': fields.boolean('Show')
-    }
-    _order='parent_id'
+
+    category_id = fields.One2many('ani.env', 'type_id', 'Type ID')
+    name = fields.Char('Name', required=True)
+    # complete_name' = fields.function(_name_get_fnc, type="char", string='Name')
+    complete_name = fields.Char('Complete Name', size=32)
+    parent_id = fields.Many2one('ani.category', 'Parent Category',select=True, ondelete='cascade')
+    child_id = fields.One2many('ani.category', 'parent_id', string='Child Categories')
+    shortening =fields.Char('Short', size=3)
+    show = fields.Boolean('Show')
+
+    _order = 'parent_id'

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
     <data noupdate="1">
         <record model="ani.env" id="ani_env_demo_01">
             <field name="env_id">CH-201213-DS</field>
@@ -107,4 +107,4 @@
           <field name="folds">convert</field>
         </record>
     </data>
-</openerp>
+</odoo>

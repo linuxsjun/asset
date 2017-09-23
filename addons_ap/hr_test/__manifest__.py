@@ -13,7 +13,7 @@
     # 模块资料网站
     'website': 'https://www.tedo.com',
     # 作者
-    'author':'Sunj',
+    'author': 'S.Jun',
     # 版本
     'version': '1.3',
     # 说明

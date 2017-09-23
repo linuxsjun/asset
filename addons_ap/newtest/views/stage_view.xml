@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
   <data>
     <!--sub Stage view -->
     <record model="ir.ui.view" id="view_tree_stage">
@@ -16,6 +16,7 @@
         </tree>
       </field>
     </record>
+
     <record model="ir.ui.view" id="view_form_stage">
       <field name="name">view.form_stage</field>
       <field name="model">ani.stage</field>
@@ -41,11 +42,18 @@
         </form>
       </field>
     </record>
-    <record model="ir.actions.act_window" id="action_list_stage">
-      <field name="name">stage</field>
-      <field name="res_model">ani.stage</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem name ="Stage"  id="menu_ani_cfg_stage"  parent="menu_ani_cfg"  sequence="10"  action="action_list_stage"/>
+
+      <!--action-->
+      <record model="ir.actions.act_window" id="action_list_stage">
+          <field name="name">stage</field>
+          <field name="res_model">ani.stage</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+
+      <!--menu-->
+      <menuitem id="menu_ani_cfg_stage" name ="Stage"
+                parent="menu_ani_cfg"
+                sequence="10"
+                action="action_list_stage"/>
   </data>
-</openerp>
+</odoo>
