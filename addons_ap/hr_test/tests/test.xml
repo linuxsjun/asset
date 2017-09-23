@@ -1,0 +1,121 @@
+<notebook>
+    <page string="Worked Days &amp; Inputs">
+        <separator string="Worked Days"/>
+        <field name="worked_days_line_ids">
+            <tree string="Worked Days" editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="number_of_days" sum="Total Working Days"/>
+                <field name="number_of_hours"/>
+                <field name="contract_id"/>
+                <field name="sequence" invisible="True"/>
+            </tree>
+            <form string="Worked Day">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="sequence"/>
+                    <field name="number_of_days"/>
+                    <field name="number_of_hours"/>
+                    <field name="contract_id"/>
+                </group>
+            </form>
+        </field>
+        <separator string="Other Inputs"/>
+        <field name="input_line_ids" colspan="4" nolabel="1">
+            <tree string="Input Data" editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="amount"/>
+                <field name="contract_id"/>
+                <field name="sequence" invisible="True"/>
+            </tree>
+            <form string="Payslip Line">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="sequence"/>
+                    <field name="amount"/>
+                    <field name="contract_id"/>
+                </group>
+            </form>
+        </field>
+    </page>
+
+
+
+
+    <page string="Salary Computation">
+        <field name="line_ids" colspan="4" nolabel="1">
+            <tree string="Salary Structure" editable="bottom" decoration-info="total == 0">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="sequence" invisible="1"/>
+                <field name="quantity"/>
+                <field name="rate"/>
+                <field name="salary_rule_id"/>
+                <field name="amount"/>
+                <field name="total"/>
+            </tree>
+            <form string="Payslip Line">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="sequence"/>
+                    <field name="quantity"/>
+                    <field name="rate"/>
+                    <field name="amount"/>
+                    <field name="total"/>
+                    <field name="salary_rule_id"/>
+                </group>
+            </form>
+        </field>
+    </page>
+    <page string="Details By Salary Rule Category">
+        <field name="details_by_salary_rule_category" context="{'group_by':'category_id'}" domain="[('appears_on_payslip', '=', True)]">
+            <tree string="Payslip Lines" decoration-info="total == 0">
+                <field name="category_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="total"/>
+            </tree>
+        </field>
+   </page>
+    <page string="Accounting Information">
+        <group>
+            <group string="Miscellaneous">
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="payslip_run_id" domain="[('state','=','draft')]"/>
+            </group>
+            <group name="accounting" string="Accounting">
+                <field name="paid" readonly="1"/>
+            </group>
+        </group>
+        <div colspan="4">
+            <field name="note" placeholder="Add an internal note..."/>
+        </div>
+   </page>
+</notebook>
+
+        <record model="ir.actions.act_window" id="action_list_mp">
+            <field name="name">mp</field>
+            <field name="res_model">mp.property</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+                <header>
+                    <button name="button_mark_done" attrs="{'invisible': [('check_to_done', '=', False)]}" string="Mark as Done" type="object" class="oe_highlight"/>
+                    <button name="action_assign" attrs="{'invisible': [('availability', 'in', ('assigned', 'none'))]}" string="Check availability" type="object" class="oe_highlight"/>
+                    <button name="button_plan" attrs="{'invisible': ['|', ('state', '!=', 'confirmed'), ('routing_id', '=', False)]}" type="object" string="Create Workorders" class="oe_highlight"/>
+                    <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', ('check_to_done', '=', True), ('availability', 'not in', ['partially_available', 'assigned']), ('state', 'not in', ('confirmed','progress')), ('routing_id', '!=', False)]}" string="Produce" type="object" class="oe_highlight"/>
+                    <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress')), ('routing_id', '!=', False)]}" string="Produce" type="object"/>
+                    <button name="post_inventory" string="Post Inventory" type="object" attrs="{'invisible': [('post_visible', '=', False)]}"/>
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': ['|', ('state', 'in', ('done','cancel')), ('check_to_done', '=', True)]}"/>
+                    <button name="button_scrap" type="object" string="Scrap" attrs="{'invisible': ['|', ('availability', '=', 'none'), ('state', 'in', ('cancel'))]}"/>
+                    <button name="button_unreserve" type="object" string="Unreserve" attrs="{'invisible': [('unreserve_visible', '=', False)]}"/>
+                    <span class="label label-danger" attrs="{'invisible': ['|', ('availability', 'in', ('assigned', 'none')), ('state', 'not in', ('confirmed','progress'))]}">Raw materials not available!</span>
+                    <field name="state" widget="statusbar" statusbar_visible="confirmed,progress,done"/>
+                </header>

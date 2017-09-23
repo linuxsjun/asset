@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mp_type_defule_1" model="mp.type">
+            <field name="type_ids">1</field>
+            <field name="name">主机</field>
+        </record>
+        <record id="mp_type_defule_2" model="mp.type">
+            <field name="type_ids">2</field>
+            <field name="name">交换机</field>
+        </record>
+        <record id="mp_type_defule_3" model="mp.type">
+            <field name="type_ids">3</field>
+            <field name="name">手写板</field>
+        </record>
+        <record id="mp_type_defule_4" model="mp.type">
+            <field name="type_ids">4</field>
+            <field name="name">显示器</field>
+        </record>
+        <record id="mp_type_defule_5" model="mp.type">
+            <field name="type_ids">5</field>
+            <field name="name">打印机</field>
+        </record>
+        <record id="mp_type_defule_6" model="mp.type">
+            <field name="type_ids">6</field>
+            <field name="name">扫描仪</field>
+        </record>
+        <record id="mp_type_defule_7" model="mp.type">
+            <field name="type_ids">7</field>
+            <field name="name">移动硬盘</field>
+        </record>
+        <record id="mp_type_defule_8" model="mp.type">
+            <field name="type_ids">8</field>
+            <field name="name">手写板</field>
+        </record>
+        <record id="mp_type_defule_9" model="mp.type">
+            <field name="type_ids">9</field>
+            <field name="name">考勤机</field>
+        </record>
+        <record id="mp_type_defule_13" model="mp.type">
+            <field name="type_ids">10</field>
+            <field name="name">手写板</field>
+        </record>
+    </data>
+</odoo>

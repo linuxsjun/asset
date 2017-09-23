@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mp_property_demo" model="mp.property">
+            <field name="sid">TE-SP00001</field>
+            <field name="name">dell</field>
+            <field name="specifications">T3600</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--view-->
+        <record id="view_prats_tree" model="ir.ui.view">
+            <field name="name">prats.tree</field>
+            <field name="model">mp.parts</field>
+            <field name="arch" type="xml">
+                <tree string="view_parts_lt" decoration-info="status == 'used'" decoration-muted="status == 'repair'">
+                    <field name="pid" />
+                    <field name="name" />
+                    <field name="sn" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_property_tree" model="ir.ui.view">
+            <field name="name">property.tree</field>
+            <field name="model">mp.property</field>
+            <field name="arch" type="xml">
+                <tree string="view_property_lt" decoration-info="status == 'used'" decoration-muted="status == 'repair'">
+                    <field name="sid" />
+                    <field name="name" />
+                    <field name="specifications" />
+                    <field name="model" />
+                    <field name="type_id" />
+                    <field name="purchase" />
+                    <field name="manufacture" />
+                    <field name="sn" />
+                    <field name="user" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_property_from" model="ir.ui.view">
+            <field name="name">property.form</field>
+            <field name="model">mp.property</field>
+            <field name="arch" type="xml">
+                <form string="view_property_vw">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="action_list_mp"/>
+                        <button string="Cancel" type="object" name="cancel" class="action_list_mp"/>
+                        <field name="status" widget="statusbar" clickable="1" />
+                    </header>
+                    <sheet>
+                        <label for="sid" string="Asset Number" class="oe_edit_only"/>
+                        <h1>
+                            <field name="sid" placeholder="Contract Reference"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="specifications" />
+                                <field name="model" />
+                                <field name="type_id" />
+                            </group>
+                            <group>
+                                <field name="purchase" />
+                                <field name="price" />
+                                <field name="manufacture" />
+                                <field name="sn" />
+                                <field name="user" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="partlt" string="Parts">
+                                <separator string="Parts"/>
+                                <field name="parts_list_ids">
+                                    <tree string="Parts List" editable="bottom">
+                                        <field name="name" />
+                                        <field name="sn" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="mp_parts" string = "Other">
+                                <group string="Other">
+                                    <field name = "purchase" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--action-->
+        <record model="ir.actions.act_window" id="action_list_parts">
+            <field name="name">act_parts</field>
+            <field name="res_model">mp.parts</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_form_mp">
+            <field name="name">act_property</field>
+            <field name="res_model">mp.property</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!--menu-->
+        <menuitem id="menu_mp_root" name="Property"
+            groups="base.group_user"
+            sequence="90" />
+
+        <menuitem id="menu_mp_propertys" name="Propertys"
+            parent="menu_mp_root"
+            groups="base.group_user"
+            sequence="91"/>
+
+        <menuitem id="menu_mp_property" name="Property"
+            parent="menu_mp_propertys"
+            action="action_form_mp"
+            groups="base.group_user"
+            sequence="92"/>
+
+        <menuitem id="menu_mp_parts" name="Parts"
+            parent="menu_mp_propertys"
+            action="action_list_parts"
+            groups="base.group_user"
+            sequence="93"/>
+    </data>
+</odoo>
