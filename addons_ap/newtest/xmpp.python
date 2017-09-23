@@ -1,0 +1,24 @@
+# -*- codeing:utf-8 -*-
+#apt-get install python-xmpp
+import xmpp
+
+username = 'jt01'
+password = '123456'
+to = 'it@jtanimation.com'
+msg = """intodkow.slo .Hi, Zhang San.jislinfalirwlajroaj34
+jkljasdfpij;
+j;ljadifj
+jfiojaoiejrlk
+jjkaoijera
+"""
+
+def main():
+    client = xmpp.Client('jtanimation.com')
+    client.connect(server = ('172.18.0.59', 5222))
+    client.auth(username, password, 'botty')
+    client.sendInitPresence()
+    message = xmpp.Message(to, msg, typ = 'chat')
+    client.send(message)
+
+if __name__=='__main__':
+    main()

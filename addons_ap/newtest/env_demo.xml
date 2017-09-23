@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record model="ani.env" id="ani_env_demo_01">
+            <field name="env_id">CH-201213-DS</field>
+            <field name="name">党史百集策划</field>
+            <field name="shortening">DS</field>
+            <field name="parent">sws</field>
+            <field name="start_date">2014-9-11</field>
+            <field name="end_date">2014-9-19</field>
+            <field name="days">2</field>
+            <field name="status">wait_prove</field>
+        </record>
+        <record model="ani.env" id="ani_env_demo_02">
+            <field name="env_id">JTM20140903-01</field>
+            <field name="name">中铁精细化管理动画</field>
+            <field name="shortening">01</field>
+            <field name="parent">sws</field>
+            <field name="start_date">2014-9-9</field>
+            <field name="end_date">2014-9-10</field>
+            <field name="days">2</field>
+            <field name="status">proved</field>
+        </record>
+
+        <record model="ani.stage" id="ani_stage_demo_01">
+            <field name="sequence">1</field>
+            <field name="name">剧本</field>
+            <field name="shoting">ST</field>
+            <field name="folds">script</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_02">
+            <field name="sequence">2</field>
+            <field name="name">美术设计</field>
+            <field name="shoting">CH</field>
+            <field name="folds">design</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_03">
+            <field name="sequence">3</field>
+            <field name="name">分镜</field>
+            <field name="shoting">ST</field>
+            <field name="folds">storyboard</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_04">
+            <field name="sequence">4</field>
+            <field name="name">构图</field>
+            <field name="shoting">LO</field>
+            <field name="folds">layout</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_05">
+            <field name="sequence">5</field>
+            <field name="name">背景</field>
+            <field name="shoting">BG</field>
+            <field name="folds">background</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_06">
+            <field name="sequence">6</field>
+            <field name="name">原画</field>
+            <field name="shoting">KA</field>
+            <field name="folds">original</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_07">
+            <field name="sequence">7</field>
+            <field name="name">无纸动画</field>
+            <field name="shoting">AN</field>
+            <field name="folds">animation</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_08">
+            <field name="sequence">7</field>
+            <field name="name">三维动画</field>
+            <field name="shoting">AN</field>
+            <field name="folds">3D</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_09">
+            <field name="sequence">8</field>
+            <field name="name">特效</field>
+            <field name="shoting">FX</field>
+            <field name="folds">effects</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_10">
+            <field name="sequence">9</field>
+            <field name="name">合成</field>
+            <field name="shoting">PC</field>
+            <field name="folds">compose</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_11">
+            <field name="sequence">10</field>
+            <field name="name">配音</field>
+            <field name="shoting">MX</field>
+            <field name="folds">mixing</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_12">
+            <field name="sequence">11</field>
+            <field name="name">剪辑</field>
+            <field name="shoting">CP</field>
+            <field name="folds">clip</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_13">
+            <field name="sequence">12</field>
+            <field name="name">录制</field>
+            <field name="shoting">RE</field>
+            <field name="folds">recording</field>
+        </record>
+        <record model="ani.stage" id="ani_stage_demo_14">
+          <field name="sequence">13</field>
+          <field name="name">转录</field>
+          <field name="shoting">TR</field>
+          <field name="folds">convert</field>
+        </record>
+    </data>
+</openerp>

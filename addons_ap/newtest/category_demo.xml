@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record model="ani.category" id="ani_category_demo_00">
+            <field name="name">任务</field>
+            <field name="shortening">JTM</field>
+            <field name="show">1</field>
+        </record>
+        <record model="ani.category" id="ani_category_demo_01">
+            <field name="name">策划</field>
+            <field name="shortening">CH</field>
+            <field name="show">1</field>
+        </record>
+        <record model="ani.category" id="ani_category_demo_02">
+            <field name="name">加工</field>
+            <field name="shortening">JG</field>
+            <field name="show">1</field>
+        </record>
+        <record model="ani.category" id="ani_category_demo_03">
+            <field name="name">图书</field>
+            <field name="shortening">TS</field>
+            <field name="show">1</field>
+        </record>
+        <record model="ani.category" id="ani_category_demo_04">
+            <field name="name">制作</field>
+            <field name="shortening">CP</field>
+            <field name="show">1</field>
+        </record>
+    </data>
+</openerp>

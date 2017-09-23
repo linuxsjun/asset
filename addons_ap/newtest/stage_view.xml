@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!--sub Stage view -->
+    <record model="ir.ui.view" id="view_tree_stage">
+      <field name="name">view.tree_stage</field>
+      <field name="model">ani.stage</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <tree string="stage list" toolbar="1">
+            <field name="sequence"/>
+            <field name="name"/>
+            <field name="shoting"/>
+            <field name="folds"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_form_stage">
+      <field name="name">view.form_stage</field>
+      <field name="model">ani.stage</field>
+      <field name="type">form</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <form string="stage form" version="7.0">
+            <sheet string="stage">
+                <group>
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="folds"/>
+                </group>
+                <group>
+                    <field name="shoting"/>
+                </group>
+                <notebook>
+                    <page string="File Formate">
+                        <field name="shoting"/>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_list_stage">
+      <field name="name">stage</field>
+      <field name="res_model">ani.stage</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name ="Stage"  id="menu_ani_cfg_stage"  parent="menu_ani_cfg"  sequence="10"  action="action_list_stage"/>
+  </data>
+</openerp>

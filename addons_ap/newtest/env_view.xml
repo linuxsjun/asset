@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- top menu item -->
+    <menuitem name ="Animation"      id="menu_ani_root" groups="base.group_user" sequence="10"/>
+    <!-- sub menu item -->
+    <menuitem name ="Design"         id="menu_ani_des"  parent="menu_ani_root"   sequence="10"/>
+    <menuitem name ="Manufacturing"  id="menu_ani_mrp"  parent="menu_ani_root"   sequence="11"/>
+    <menuitem name ="Configuration"  id="menu_ani_cfg"  parent="menu_ani_root"   sequence="12"/>
+
+    <!--sub env view -->
+    <record model="ir.ui.view" id="view_tree_env">
+      <field name="name">view.tree_env</field>
+      <field name="model">ani.env</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <tree colors="blue:status == 'draft'; grey:status == 'rejected'" string="env list" toolbar="1">
+            <field name="env_id"/>
+            <field name="name"/>
+            <field name="priority"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="status"/>
+            <!--
+            <field name="status" widget="progressbar"/> 进程条
+            -->
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_form_env">
+      <field name="name">view.form_env</field>
+      <field name="model">ani.env</field>
+      <field name="type">form</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <form string="env form" version="7.0">
+          <header>
+            <field name="status" widget="statusbar" clickable="True" statusbar_colors="{&quot;pending&quot;:&quot;red&quot;}"/>
+          </header>
+          <sheet string="env">
+            <div class="oe_title">
+                <!--label for="name" class="oe_edit_only" String="Name"/-->
+                <h1>
+                    <field name="name" default_focus="1" placeholder="Name"/>
+                </h1>
+                <group>
+                    <field name="shortening"/>
+                    <field name="env_id"/>
+                </group>
+            </div>
+            <div class="oe_night eo_button_box" name="buttons" groups="base.group_user">
+                <button name="526" string="Tasks" type="action"  icon="STOCK_FILE"/>
+                <button name="256" string="Documents" type="object"  icon="STOCK_FILE"/>
+            </div>
+            <group>
+                <group>
+                    <field name="type_id"/>
+                </group>
+                <group>
+                    <field name="parent"/>
+                    <field name="priority"/>
+                </group>
+            </group>
+            <notebook>
+                <page string="Info">
+                    <group>
+                        <group>
+                            <field name="start_date" string="Start date"/>
+                            <field name="end_date" string="End date"/>
+                            <field name="days"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                </page>
+                <page string="Stage">
+                    <field name="envlstage_id"/>
+                </page>
+                <page string="Budget">
+
+                </page>
+                <page string="Team">
+
+                </page>
+                <page string="Storage">
+                    <group>
+                        <group string="Space">
+
+                        </group>
+                        <group string="Ftp">
+
+                        </group>
+                    </group>
+                </page>
+             </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_list_env">
+      <field name="name">env</field>
+      <field name="res_model">ani.env</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name ="env"  id="menu_ani_mrp_env"  parent="menu_ani_mrp"  sequence="10" action="action_list_env"/>
+
+    <!--view-->
+    <record model="ir.ui.view" id="view_tree_env_stage">
+          <field name="name">view.tree_env_stage</field>
+          <field name="model">ani.env.stage</field>
+          <field name="type">tree</field>
+          <field name="priority" eval="16"/>
+          <field name="arch" type="xml">
+              <tree string="env stage list" toolbar="1" editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="stagelenv"/>
+                  <field name="parent" />
+              </tree>
+          </field>
+      </record>
+  </data>
+</openerp>
