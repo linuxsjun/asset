@@ -697,17 +697,17 @@ var CalendarView = View.extend({
                 date_start_day = new Date(event.start.getFullYear(),event.start.getMonth(),event.start.getDate(),7);
                 date_stop_day = new Date(event_end.getFullYear(),event_end.getMonth(),event_end.getDate(),19);
             }
-            data[this.date_start] = time.datetime_to_str(date_start_day);
+            data[this.date_start] = time.auto_date_to_str(date_start_day, this.fields[this.date_start].type);
             if (this.date_stop) {
-                data[this.date_stop] = time.datetime_to_str(date_stop_day);
+                data[this.date_stop] = time.auto_date_to_str(date_stop_day, this.fields[this.date_stop].type);
             }
             diff_seconds = Math.round((date_stop_day.getTime() - date_start_day.getTime()) / 1000);
                             
         }
         else {
-            data[this.date_start] = time.datetime_to_str(event.start);
+            data[this.date_start] = time.auto_date_to_str(event.start, this.fields[this.date_start].type);
             if (this.date_stop) {
-                data[this.date_stop] = time.datetime_to_str(event_end);
+                data[this.date_stop] = time.auto_date_to_str(event_end, this.fields[this.date_stop].type);
             }
             diff_seconds = Math.round((event_end.getTime() - event.start.getTime()) / 1000);
         }
@@ -788,7 +788,7 @@ var CalendarView = View.extend({
                         return;
                     }
 
-                    if (!self.useContacts) {  // If we use all peoples displayed in the current month as filter in sidebars
+                    if (!self.useContacts && self.fields[self.color_field]) {  // If we use all peoples displayed in the current month as filter in sidebars
                         var filter_item;
 
                         self.now_filter_ids = [];
@@ -892,7 +892,7 @@ var CalendarView = View.extend({
         var index = this.dataset.get_id_index(id);
         if (index !== null) {
             event_id = this.dataset.ids[index];
-            this.dataset.write(event_id, data, {}).always(function() {
+            this.dataset.write(event_id, data, {context: {from_ui: true}}).always(function() {
                 if (is_virtual_id(event_id)) {
                     // this is a virtual ID and so this will create a new event
                     // with an unknown id for us.

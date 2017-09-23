@@ -154,7 +154,7 @@
              </field>
          </record>
 
-        <record id="hr_kanban_view_employees" model="ir.ui.view">
+    <record id="hr_kanban_view_employees" model="ir.ui.view">
         <field name="name">hr.employee.kanban</field>
         <field name="model">hr.employee</field>
         <field name="priority">10</field>

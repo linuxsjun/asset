@@ -156,7 +156,8 @@ class StockMove(models.Model):
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
     def _compute_product_qty(self):
         if self.product_uom:
-            self.product_qty = self.product_uom._compute_quantity(self.product_uom_qty, self.product_id.uom_id)
+            rounding_method = self._context.get('rounding_method', 'UP')
+            self.product_qty = self.product_uom._compute_quantity(self.product_uom_qty, self.product_id.uom_id, rounding_method=rounding_method)
 
     def _set_product_qty(self):
         """ The meaning of product_qty field changed lately and is now a functional field computing the quantity
@@ -219,8 +220,11 @@ class StockMove(models.Model):
 
     @api.constrains('product_uom')
     def _check_uom(self):
-        if any(move.product_id.uom_id.category_id.id != move.product_uom.category_id.id for move in self):
-            raise UserError(_('You try to move a product using a UoM that is not compatible with the UoM of the product moved. Please use an UoM in the same UoM category.'))
+        moves_error = self.filtered(lambda move: move.product_id.uom_id.category_id.id != move.product_uom.category_id.id)
+        if moves_error:
+            user_warning = _('You try to move a product using a UoM that is not compatible with the UoM of the product moved. Please use an UoM in the same UoM category.')
+            user_warning += '\n\nBlocking: %s' % ' ,'.join(moves_error.mapped('name'))
+            raise UserError(user_warning)
 
     @api.model_cr
     def init(self):
@@ -498,9 +502,12 @@ class StockMove(models.Model):
         self._push_apply()
         return self
 
+    def _set_default_price_moves(self):
+        return self.filtered(lambda move: not move.price_unit)
+
     def set_default_price_unit_from_product(self):
         """ Set price to move, important in inter-company moves or receipts with only one partner """
-        for move in self.filtered(lambda move: not move.price_unit):
+        for move in self._set_default_price_moves():
             move.write({'price_unit': move.product_id.standard_price})
     attribute_price = set_default_price_unit_from_product
 
@@ -552,7 +559,7 @@ class StockMove(models.Model):
                     (move.picking_id.picking_type_id.use_existing_lots or move.picking_id.picking_type_id.use_create_lots) and \
                     move.product_id.tracking != 'none' and \
                     not (move.restrict_lot_id or (pack_operation and (pack_operation.product_id and pack_operation.pack_lot_ids)) or (pack_operation and not pack_operation.product_id)):
-                raise UserError(_('You need to provide a Lot/Serial Number for product %s') % move.product_id.name)
+                raise UserError(_('You need to provide a Lot/Serial Number for product %s') % ("%s (%s)" % (move.product_id.name, move.picking_id.name)))
 
     @api.multi
     def action_assign(self, no_prepare=False):
@@ -947,11 +954,11 @@ class StockMove(models.Model):
         # TDE CLEANME: remove context key + add as parameter
         if self.env.context.get('source_location_id'):
             defaults['location_id'] = self.env.context['source_location_id']
-        new_move = self.copy(defaults)
+        new_move = self.with_context(rounding_method='HALF-UP').copy(defaults)
         # ctx = context.copy()
         # TDE CLEANME: used only in write in this file, to clean
         # ctx['do_not_propagate'] = True
-        self.with_context(do_not_propagate=True).write({'product_uom_qty': self.product_uom_qty - uom_qty})
+        self.with_context(do_not_propagate=True, rounding_method='HALF-UP').write({'product_uom_qty': self.product_uom_qty - uom_qty})
         
         if self.move_dest_id and self.propagate and self.move_dest_id.state not in ('done', 'cancel'):
             new_move_prop = self.move_dest_id.split(qty)

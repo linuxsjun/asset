@@ -98,7 +98,11 @@ class ResPartner(models.Model):
 
     @api.constrains("vat")
     def check_vat(self):
-        if self.env.user.company_id.vat_check_vies:
+        if self.env.context.get('company_id'):
+            company = self.env['res.company'].browse(self.env.context['company_id'])
+        else:
+            company = self.env.user.company_id
+        if company.vat_check_vies:
             # force full VIES online check
             check_func = self.vies_vat_check
         else:
@@ -126,7 +130,11 @@ class ResPartner(models.Model):
         vat_no = "'CC##' (CC=Country Code, ##=VAT Number)"
         if default_vat_check(vat_country, vat_number):
             vat_no = _ref_vat[vat_country] if vat_country in _ref_vat else vat_no
-            if self.env.user.company_id.vat_check_vies:
+            if self.env.context.get('company_id'):
+                company = self.env['res.company'].browse(self.env.context['company_id'])
+            else:
+                company = self.env.user.company_id
+            if company.vat_check_vies:
                 return '\n' + _('The VAT number [%s] for partner [%s] either failed the VIES VAT validation check or did not respect the expected format %s.') % (self.vat, self.name, vat_no)
         return '\n' + _('The VAT number [%s] for partner [%s] does not seem to be valid. \nNote: the expected format is %s') % (self.vat, self.name, vat_no)
 
@@ -228,10 +236,14 @@ class ResPartner(models.Model):
         return True
 
     # Norway VAT validation, contributed by Rolv Råen (adEgo) <rora@adego.no>
+    # Support for MVA suffix contributed by Bringsvor Consulting AS (bringsvor@bringsvor.com)
     def check_vat_no(self, vat):
-        '''
+        """
         Check Norway VAT number.See http://www.brreg.no/english/coordination/number.html
-        '''
+        """
+        if len(vat) == 12 and vat.upper().endswith('MVA'):
+            vat = vat[:-3] # Strictly speaking we should enforce the suffix MVA but...
+
         if len(vat) != 9:
             return False
         try:
