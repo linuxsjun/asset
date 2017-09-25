@@ -19,7 +19,11 @@
             <field name="name">property.tree</field>
             <field name="model">mp.property</field>
             <field name="arch" type="xml">
-                <tree string="view_property_lt" decoration-info="status == 'used'" decoration-muted="status == 'repair'">
+                <tree string="view_property_lt"
+                      decoration-info="status == 'used'"
+                      decoration-muted="status == 'repair'"
+                      decoration-success="status == 'idle'"
+                      decoration-danger="status == 'scrap'">
                     <field name="sid" />
                     <field name="name" />
                     <field name="specifications" />
@@ -40,8 +44,8 @@
             <field name="arch" type="xml">
                 <form string="view_property_vw">
                     <header>
-                        <button string="Apply" type="object" name="execute" class="action_list_mp"/>
-                        <button string="Cancel" type="object" name="cancel" class="action_list_mp"/>
+                        <button string="Apply" type="object" name="execute" class="action_form_mp"/>
+                        <button string="Cancel" type="object" name="cancel" class="action_form_mp"/>
                         <field name="status" widget="statusbar" clickable="1" />
                     </header>
                     <sheet>
@@ -76,7 +80,7 @@
                             </page>
                             <page name="mp_parts" string = "Other">
                                 <group string="Other">
-                                    <field name = "purchase" />
+                                    <label string="Asset Number" />
                                 </group>
                             </page>
                         </notebook>
@@ -89,15 +93,13 @@
         <record model="ir.actions.act_window" id="action_list_parts">
             <field name="name">act_parts</field>
             <field name="res_model">mp.parts</field>
-            <field name="view_type">tree</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <record model="ir.actions.act_window" id="action_form_mp">
             <field name="name">act_property</field>
             <field name="res_model">mp.property</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <!--menu-->

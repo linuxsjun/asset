@@ -10,4 +10,5 @@ def download(url):
         print 'Dl:,', e.reason
         html = None
     return html
-# print download('http://www.baidu.com')
+
+print download('http://www.baidu.com')
